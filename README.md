@@ -1,2 +1,2 @@
-# cubicaltt-snippets
-Cubical Type Theory snippets
+# Cubical Type Theory snippets
+
