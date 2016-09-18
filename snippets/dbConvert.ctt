@@ -1,0 +1,35 @@
+module dbConvert where
+
+import prelude
+import univalence
+
+data list (A : U) = nil | cons (x : A) (xs : list A)
+data bool = false | true
+data nat = zero | suc (n : nat)
+
+one : nat = suc zero
+two : nat = suc one
+three : nat = suc two
+
+Pair (A : U) (B : U) : U = (_ : A) * B
+
+swapf (t : Pair nat nat) : Pair nat nat = (t.2, t.1)
+
+swap (t : Pair nat nat) : Path (Pair nat nat) (swapf (swapf t)) t =
+  refl (Pair nat nat) t
+
+There (A : U) : U = list ((_ : bool) * A)
+
+path : Path U (Pair nat nat) (Pair nat nat) =
+  isoPath (Pair nat nat) (Pair nat nat) swapf swapf swap swap
+
+DB : U = list ((_ : bool) * Pair nat nat)
+
+convert (db : DB) : DB = subst U There (Pair nat nat) (Pair nat nat) path db
+
+example : DB =
+  cons (true, (one, two))
+  (cons (false, (two, three))
+  (cons (true, (three, one)) nil))
+
+example' : DB = convert example
