@@ -1,3 +1,4 @@
+-- Based on http://www.cs.cmu.edu/~drl/teaching/oplss13/
 {-# OPTIONS --cubical #-}
  
 open import Cubical.Core.Primitives
